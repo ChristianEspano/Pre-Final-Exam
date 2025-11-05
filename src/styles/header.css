@@ -1,0 +1,72 @@
+header {
+  background: repeating-linear-gradient(
+      45deg,
+      #111 0,
+      #111 10px,
+      #0e0e0e 10px,
+      #0e0e0e 20px
+    );
+  border-bottom: 2px solid rgba(255, 0, 0, 0.4);
+  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.2);
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Poppins', sans-serif;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #ff1a1a, #b30000);
+  transition: width 0.3s ease;
+}
+
+nav a:hover {
+  color: #ff1a1a;
+  text-shadow: 0 0 6px rgba(255, 26, 26, 0.6);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* Active page glow (optional if you add NavLink active class) */
+nav a.active {
+  color: #ff1a1a;
+  text-shadow: 0 0 6px rgba(255, 26, 26, 0.6);
+}
+
+/* Responsive navigation */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  nav a {
+    font-size: 0.95rem;
+  }
+}

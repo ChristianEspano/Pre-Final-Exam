@@ -1,0 +1,160 @@
+/* ==== Product List Container ==== */
+.product-list {
+  width: 100%;
+  min-height: 100vh;
+  padding: 3rem 6rem;
+  color: #fff;
+  background: linear-gradient(135deg, #000000 60%, #111111 100%);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 0.05) 0 2px,
+    transparent 2px 6px
+  );
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ==== Title ==== */
+.product-list h1 {
+  color: #ff0000;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #ff0000;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+/* ==== Filter Dropdown ==== */
+.product-list select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ff0000;
+  border-radius: 6px;
+  background: #111;
+  color: white;
+  font-weight: 600;
+  margin-top: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.product-list select:hover {
+  background: #ff0000;
+  color: #000;
+}
+
+/* ==== Product Grid ==== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 5rem; /* spacing between cards */
+  justify-content: center; /* centers all cards */
+  align-items: stretch;
+  width: 100%;
+  max-width: 1300px; /* keeps cards centered, not too wide */
+  margin-top: 3rem;
+}
+
+/* ==== Individual Product Card ==== */
+.product-card {
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid #ff0000;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+}
+
+/* ==== Image ==== */
+.product-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* ==== Text Details ==== */
+.product-card h3 {
+  color: #ff0000;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.product-card p {
+  margin: 0.3rem 0;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+/* ==== Buttons ==== */
+.product-card a,
+.product-card button {
+  cursor: pointer;
+  padding: 0.6rem 1.2rem;
+  margin: 0.4rem;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  background: red;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  flex: 1;
+  z-index: 2;
+  position: relative;
+}
+
+.product-card a:hover,
+.product-card button:hover {
+  background: #ff3333;
+  transform: scale(1.05);
+}
+
+/* ==== Button Row ==== */
+.product-card div {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* ==== Responsive ==== */
+@media (max-width: 1024px) {
+  .product-list {
+    padding: 2rem;
+  }
+  .cards {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .product-card {
+    max-width: 100%;
+  }
+}
