@@ -1,11 +1,10 @@
-/* === Global Style for Car Shop === */
-
-/* Carbon fiber background */
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #000;
-  color: #fff;
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0d0d0d url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+    color: #fff;
 }
 
 #root {
@@ -22,7 +21,6 @@ body {
   align-items: center;
 }
 
-/* Header / Navbar */
 header {
   background: linear-gradient(90deg, #111 0%, #222 100%);
   border-bottom: 2px solid red;
@@ -48,7 +46,6 @@ header a:hover {
   color: red;
 }
 
-/* Buttons */
 button {
   background: linear-gradient(90deg, red, darkred);
   color: #fff;
@@ -65,15 +62,15 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Card Layouts */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
+  gap: 6rem;
   padding: 40px;
 }
 
 .product-card {
+     max-width: 1300px; 
   background: rgba(20, 20, 20, 0.9);
   border: 1px solid #222;
   border-radius: 12px;
@@ -88,13 +85,11 @@ button:hover {
   box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
 }
 
-/* Fix clickable area issue (IMPORTANT) */
 .product-card * {
   position: relative;
   z-index: 2;
 }
 
-/* Footer */
 footer {
   background: #111;
   color: #888;

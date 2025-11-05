@@ -1,8 +1,7 @@
-/* ==== Product List Container ==== */
 .product-list {
   width: 100%;
   min-height: 100vh;
-  padding: 3rem 6rem;
+  padding: 3rem 2rem;
   color: #fff;
   background: linear-gradient(135deg, #000000 60%, #111111 100%);
   background-image: repeating-linear-gradient(
@@ -14,9 +13,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-/* ==== Title ==== */
 .product-list h1 {
   color: #ff0000;
   font-size: 2rem;
@@ -28,9 +29,8 @@
   padding-bottom: 0.5rem;
 }
 
-/* ==== Filter Dropdown ==== */
 .product-list select {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   border: 1px solid #ff0000;
   border-radius: 6px;
   background: #111;
@@ -46,19 +46,18 @@
   color: #000;
 }
 
-/* ==== Product Grid ==== */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 5rem; /* spacing between cards */
-  justify-content: center; /* centers all cards */
-  align-items: stretch;
+  gap: 4rem; 
+  justify-content: center; 
+  align-items: start;
   width: 100%;
-  max-width: 1300px; /* keeps cards centered, not too wide */
-  margin-top: 3rem;
+  max-width: 1300px;
+  margin: 3rem auto;
+  box-sizing: border-box;
 }
 
-/* ==== Individual Product Card ==== */
 .product-card {
   background: rgba(20, 20, 20, 0.95);
   border: 1px solid #ff0000;
@@ -70,6 +69,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
   position: relative;
@@ -80,7 +80,43 @@
   box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
 }
 
-/* ==== Image ==== */
+.product-card.low-stock {
+  border: 2px solid #ff4d4d;
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+  animation: pulseGlow 1.5s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+  }
+  to {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+  }
+}
+
+.low-stock-badge {
+  background: #ff0000;
+  color: white;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  display: inline-block;
+  margin: 0.5rem auto;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: blinkBadge 1.2s infinite alternate;
+}
+
+@keyframes blinkBadge {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .product-card img {
   width: 100%;
   height: 220px;
@@ -94,7 +130,6 @@
   transform: scale(1.05);
 }
 
-/* ==== Text Details ==== */
 .product-card h3 {
   color: #ff0000;
   font-size: 1.2rem;
@@ -108,7 +143,6 @@
   font-size: 0.9rem;
 }
 
-/* ==== Buttons ==== */
 .product-card a,
 .product-card button {
   cursor: pointer;
@@ -132,7 +166,6 @@
   transform: scale(1.05);
 }
 
-/* ==== Button Row ==== */
 .product-card div {
   display: flex;
   justify-content: center;
@@ -140,7 +173,6 @@
   margin-top: 1rem;
 }
 
-/* ==== Responsive ==== */
 @media (max-width: 1024px) {
   .product-list {
     padding: 2rem;

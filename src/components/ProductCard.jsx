@@ -1,17 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/productCard.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import "../styles/productCard.css";
 
 function ProductCard({ product, addToCart }) {
+  const isLowStock = product.quantity < 5;
+
   return (
-    <div className="product-card">
-      <img src={product.image} alt={product.name} />
-      <h3>{product.name}</h3>
-      <p>Price: ${product.price}</p>
-      <p>Quantity: {product.quantity}</p>
-      <p>Subtotal: ${product.price * product.quantity}</p>
-      <Link to={`/product/${product.id}`}>View Details</Link>
-      <button onClick={() => addToCart(product)}>Add to Cart</button>
+    <div className={`product-card ${isLowStock ? "low-stock" : ""}`}>
+      <img src={product.image} alt={product.name} className="product-image" />
+
+      <h3 className="product-name">{product.name}</h3>
+
+      <p>Price: ${product.price.toLocaleString()}</p>
+      <p>
+        Quantity:{" "}
+        <span className={isLowStock ? "quantity-warning" : ""}>
+          {product.quantity}
+        </span>
+      </p>
+      <p>Subtotal: ${(product.price * product.quantity).toLocaleString()}</p>
+
+      {isLowStock && (
+        <p className="low-stock-text">⚠ Low Stock! Only {product.quantity} left.</p>
+      )}
+
+      <div className="button-group">
+        <Link to={`/product/${product.id}`} className="details-btn">
+          View Details
+        </Link>
+        <button className="cart-btn" onClick={() => addToCart(product)}>
+          Add to Cart
+        </button>
+      </div>
     </div>
   );
 }

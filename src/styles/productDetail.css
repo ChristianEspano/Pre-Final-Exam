@@ -90,12 +90,10 @@
 }
 
 
-
 .product-detail:hover::before {
   opacity: 1;
 }
 
-/* Responsive design */
 @media (max-width: 700px) {
   .product-detail {
     padding: 25px;
