@@ -1,24 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/cart.css';
 
-function Cart({ cart, updateQuantity, handleCheckout }) {
-  const [removing, setRemoving] = useState(false); 
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+function Cart({ cart, updateQuantity, setCart }) {
+  const [removing, setRemoving] = useState(false);
+  const [total, setTotal] = useState(0);
 
+  // Update total when cart changes
+  useEffect(() => {
+    const newTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    setTotal(newTotal);
+  }, [cart]);
 
   const handleClear = () => {
     if (cart.length === 0) return;
+    if (!window.confirm('Are you sure you want to clear the entire cart?')) return;
+
     setRemoving(true);
-    setTimeout(() => {
-      updateQuantity(null, 'clear'); 
-      setRemoving(true);
-    }, 300); 
+
+    // Immediately clear everything
+    setCart([]);
+    setTotal(0);
+    localStorage.removeItem('cart');
+    updateQuantity(null, 'clear');
+
+    // Finish animation state
+    setTimeout(() => setRemoving(false), 300);
   };
 
   return (
     <div className="cart">
       <h1>Cart</h1>
+
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -39,15 +52,17 @@ function Cart({ cart, updateQuantity, handleCheckout }) {
               <p>Subtotal: ${item.price * item.quantity}</p>
             </div>
           ))}
-          <h2>Total: ${total}</h2>
-          <div className="cart-actions">
-            <button className="clear-btn" onClick={handleClear}>
-              Clear Cart
-            </button>
-            <button className="checkout-btn" onClick={handleCheckout}>
-              Checkout
-            </button>
-          </div>
+
+          {cart.length > 0 && (
+            <>
+              <h2>Total: ${total}</h2>
+              <div className="cart-actions">
+                <button className="clear-btn" onClick={handleClear}>
+                  Clear Cart
+                </button>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>

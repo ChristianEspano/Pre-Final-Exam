@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import ProductList from './components/ProductList';
@@ -17,7 +17,7 @@ function App() {
   const [products, setProducts] = useState([
     {
       id: 1,
-      image: 'https://tse1.mm.bing.net/th/id/OIP.isLHB8E2VAZW2vuKxVEtQAHaE8?pid=Api&P=0&h=220',
+      image: 'https://i.pinimg.com/1200x/41/94/b0/4194b0166deaec930aaa9086b6e01c26.jpg',
       name: 'McLaren 720s Spider',
       category: 'Supercars',
       description: 'The McLaren 720S Spider is a breathtaking open-top supercar that combines lightweight carbon construction, extreme performance, and elegant design. Its retractable hardtop lets you enjoy supercar thrills with open-air freedom.',
@@ -34,7 +34,7 @@ function App() {
       description: 'The Lamborghini Urus is a high-performance luxury SUV that blends supercar power with everyday usability. It features exotic styling, a premium interior and sport-scar dynamics while seating four to five passengers.',
       spec: '4.0 L twin-turbo V8 • ~641 hp • ~850 Nm torque • 8-speed automatic • AWD • 0–100 km/h ≈ 3.6 s • Top speed ≈ 305 km/h',
       rating: 4.7,
-      price:  20828280,
+      price: 20828280,
       quantity: 13,
     },
     {
@@ -50,8 +50,22 @@ function App() {
     },
   ]);
 
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    const saved = localStorage.getItem('cart');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const [filter, setFilter] = useState('All');
+  const [toast , setToast] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
+  const showToast = (message) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 2000);
+  }
 
   const addProduct = (newProduct) => {
     const id = products.length + 1;
@@ -61,28 +75,63 @@ function App() {
   const addToCart = (product) => {
     const existing = cart.find((item) => item.id === product.id);
     if (existing) {
-      setCart(cart.map((item) =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-      ));
+      setCart(
+        cart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+      showToast(`🛒 Added ${product.name} (${existing.quantity + 1}x)`);
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
+      showToast(`🛒 Added ${product.name} (1x)`);
     }
   };
 
   const updateQuantity = (id, change) => {
-    setCart(cart.map((item) =>
-      item.id === id ? { ...item, quantity: Math.max(1, item.quantity + change) } : item
-    ).filter((item) => item.quantity > 0));
+    if (change === 'clear') {
+      return;
+    }
+
+    setCart(
+      cart
+        .map((item) =>
+          item.id === id
+            ? { ...item, quantity: Math.max(1, item.quantity + change) }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
   };
 
   return (
     <Router>
       <Header />
+
+      {toast && <div className="toast-notification">{toast}</div>}
+
       <Routes>
-        <Route path="/" element={<ProductList products={products} filter={filter} setFilter={setFilter} addToCart={addToCart} />} />
-        <Route path="/product/:id" element={<ProductDetail products={products} addToCart={addToCart} />} />
+        <Route
+          path="/"
+          element={
+            <ProductList
+              products={products}
+              filter={filter}
+              setFilter={setFilter}
+              addToCart={addToCart}
+            />
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={<ProductDetail products={products} addToCart={addToCart} />}
+        />
         <Route path="/add" element={<AddProduct addProduct={addProduct} />} />
-        <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateQuantity} />} />
+        <Route
+          path="/cart"
+          element={<Cart cart={cart} updateQuantity={updateQuantity} setCart={setCart} />}
+        />
       </Routes>
     </Router>
   );

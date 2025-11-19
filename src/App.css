@@ -98,3 +98,38 @@ footer {
   border-top: 2px solid red;
   margin-top: auto;
 }
+
+.toast-notification {
+  position: absolute;
+  top: 20px;
+  justify-content: center;
+  right: 25px;
+  background: rgba(255, 26, 26, 0.95);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+  z-index: 1000;
+  animation: slideInOut 2s ease forwards;
+}
+
+@keyframes slideInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
